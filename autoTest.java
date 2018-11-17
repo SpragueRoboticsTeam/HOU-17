@@ -79,7 +79,6 @@ public class autoTest extends LinearOpMode
             sleep(50);
             idle();
         }
-        //lol
         telemetry.addData("Mode", "waiting for start");
         telemetry.addData("imu calib status", imu.getCalibrationStatus().toString());
         telemetry.update();
@@ -179,8 +178,8 @@ public class autoTest extends LinearOpMode
 
 
 
-            // turn 90 degrees left.
-            rotate(90, power);
+            // turn 135 degrees left.
+            rotate(135, power);
         }
 
         // turn the motors off.

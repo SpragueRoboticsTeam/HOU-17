@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode;
+package org.firstinspires.ftc.teamcode.Autonomous;
 
 import android.app.Activity;
 import android.graphics.Color;
@@ -60,6 +60,7 @@ public class autoTest extends LinearOpMode
 
         parameters.mode                = BNO055IMU.SensorMode.IMU;
         parameters.angleUnit           = BNO055IMU.AngleUnit.DEGREES;
+        parameters.pitchMode           = BNO055IMU.PitchMode.ANDROID;
         parameters.accelUnit           = BNO055IMU.AccelUnit.METERS_PERSEC_PERSEC;
         parameters.loggingEnabled      = false;
 
@@ -100,7 +101,7 @@ public class autoTest extends LinearOpMode
         while (opModeIsActive())
         {
             //drive forward towards samples
-            while(runtime.seconds() < 3.0)
+            while(runtime.seconds() < 2.0)
             {
                 // drive until end of period.
                 leftMotor.setPower(FORWARD_SPEED);
@@ -126,7 +127,7 @@ public class autoTest extends LinearOpMode
             rotate(-90, power);
 
             //backup to sample on left
-            while(runtime.seconds() < 0.5)
+            while(runtime.seconds() < 0.2)
             {
                 // drive until end of period.
                 leftMotor.setPower(-FORWARD_SPEED);
@@ -149,14 +150,23 @@ public class autoTest extends LinearOpMode
             }
 
             for (int s = 0; s<3; s++){
-                //botColor.readUnsignedByte(ModernRoboticsI2cColorSensor.Register.COLOR_NUMBER)
-                if((botColor.readUnsignedByte(ModernRoboticsI2cColorSensor.Register.COLOR_NUMBER)>7)&& (botColor.readUnsignedByte(ModernRoboticsI2cColorSensor.Register.COLOR_NUMBER)<9)){
-                    wing.setPosition(0.8);
+                wing.setPosition(0.8);
+                if(botColor.readUnsignedByte(ModernRoboticsI2cColorSensor.Register.COLOR_NUMBER)!>10){
+                    while(runtime.seconds() < 0.1) {
+                        // drive until end of period.
+                        leftMotor.setPower(FORWARD_SPEED);
+                        rightMotor.setPower(FORWARD_SPEED);
+                    }
+                    while(runtime.seconds() < 0.1) {
+                        // drive until end of period.
+                        leftMotor.setPower(-FORWARD_SPEED);
+                        rightMotor.setPower(-FORWARD_SPEED);
+                    }
                 }
 
                 wing.setPosition(0.2);
 
-                while(runtime.seconds() < 0.5)
+                while(runtime.seconds() < 0.2)
                 {
                     // drive until end of period.
                     leftMotor.setPower(FORWARD_SPEED);
@@ -181,6 +191,26 @@ public class autoTest extends LinearOpMode
 
             // turn 135 degrees left.
             rotate(135, power);
+
+            while(runtime.seconds() <2.0)
+            {
+                // drive until end of period.
+                leftMotor.setPower(FORWARD_SPEED);
+                rightMotor.setPower(FORWARD_SPEED);
+                // Use gyro to drive in a straight line.
+                correction = checkDirection();
+
+                telemetry.addData("Path", "Leg 1: %2.5f S Elapsed", runtime.seconds());
+                telemetry.addData("1 imu heading", lastAngles.firstAngle);
+                telemetry.addData("2 global heading", globalAngle);
+                telemetry.addData("3 correction", correction);
+                telemetry.update();
+
+                leftMotor.setPower(-power + correction);
+                rightMotor.setPower(-power);
+
+            }
+
         }
 
         // turn the motors off.

@@ -44,7 +44,6 @@ public class hopefullyRight extends OpMode {
         outLift.setDirection(DcMotor.Direction.FORWARD);
 
         telemetry.addData("Status", "Initialized");
-
     }
 
     @Override

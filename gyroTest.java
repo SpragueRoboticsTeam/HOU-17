@@ -140,7 +140,6 @@ public class gyroTest extends LinearOpMode {
             }
         }
 
-
         rotate( TURN_SPEED,  45);         // Turn  right  to  45 Degrees
         gyroDrive(DRIVE_SPEED,5.0);    // Drive forward 5 inches
        /* rotate( TURN_SPEED,  45);         // Turn  right  to  45 Degrees

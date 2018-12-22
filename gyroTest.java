@@ -130,18 +130,18 @@ public class gyroTest extends LinearOpMode {
         Color.RGBToHSV((int) (botColor.red() * SCALE_FACTOR), (int) (botColor.green() * SCALE_FACTOR),(int) (botColor.blue() * SCALE_FACTOR), hsvValues);
 
         for (int i = 0; i < 3; i++) {
-            if (botColor.blue() < 1000) {
+            if (hsvValues[0] < 100) {
                 //move sampling mechanism
                 i = 5;
                 sleep(5000);
             }
-            else if (botColor.blue() > 2000) {
+            else if (hsvValues[0] > 100) {
                 gyroDrive(DRIVE_SPEED, 15.0);    // Drive FWD 15 inches
             }
         }
 
         rotate( TURN_SPEED,  45);         // Turn  right  to  45 Degrees
-        gyroDrive(DRIVE_SPEED,5.0);    // Drive forward 5 inches
+        gyroDrive(DRIVE_SPEED , 5.0);    // Drive forward 5 inches
        /* rotate( TURN_SPEED,  45);         // Turn  right  to  45 Degrees
       //  gyroHold( TURN_SPEED,  45.0, 0.5);    // Hold  45 Deg heading for a 1/2 second
         //rotate( TURN_SPEED,   0);         // Turn  CW  to   0 Degrees
